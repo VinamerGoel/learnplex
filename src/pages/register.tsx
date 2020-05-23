@@ -68,7 +68,11 @@ export default function Register() {
         console.log({ result })
         logEvent('guest', 'REGISTERS')
         setUser(result.data.register.user)
-        message.warn('Please check your email inbox and verify your email')
+
+        // Issue #103: Prevent Email verification
+        if (!result.data.register.user.confirmed) {
+          message.warn('Please check your email inbox and verify your email')
+        }
         await router.push('/')
       }
     })
